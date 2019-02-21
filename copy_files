@@ -1,0 +1,76 @@
+#!/bin/bash
+
+### Compiles the .cc files in models/ to find dependencies and copies them back to models/
+
+#path to quic
+QUIC_DIR="/home/ross/Code/quic"
+#path to ns-3
+NS3_DIR="/home/ross/Code/ns-3-dev"
+
+cd $( dirname ${BASH_SOURCE[0]} )
+
+files=$(find model -mindepth 2 -regextype grep -regex ".*\.cc\?$" | sed "s/model\///g" | sed "s/\.cc$//g" | sed "s/\.c$//g" | sed "s/\.h$//g" | sort -u)
+cd $QUIC_DIR/src
+echo "Entering `pwd`"
+> deps
+CXXFLAGS="-std=c++11 -I. -Iout/Default/gen -isystem third_party/protobuf/src -isystem third_party/boringssl/src/include -isystem third_party/googletest/src/googletest/include -isystem third_party/brotli/include -isystem sdch/open-vcdiff/src -I build/linux/debian_jessie_amd64-sysroot/usr/include/nspr -I build/linux/debian_jessie_amd64-sysroot/usr/include/nss -I third_party/googletest/src/googletest -DHAVE_PTHREAD -DUSE_TCMALLOC -M"
+
+function compile {
+    if [ -f $1 ] && ([ $1 -nt $1.deps ] || [ ! -s $1.deps ]); then
+        g++ $CXXFLAGS $1 > $1.deps
+        cat $1.deps >> deps
+    fi
+}
+
+for f in $files; do
+    echo "Compiling $f..."
+    compile $f.c
+    compile $f.cc
+    compile out/Default/$f.c
+    compile out/Default/$f.cc
+done
+echo "Compilation done."
+
+dep=$(cat deps | sed "s/\\\\//g" | sed "s/.\\+://g" | sed "s/ /\\n/g" | sed "s/\.h//g" | sed "s/\.cc//g" | sed "s/^\/.\+//g" | sort -u)
+for d in $dep; do
+    dir=`dirname $d`
+    mkdir -p $NS3_DIR/src/quic/model/$dir
+    if [ $d.h -nt $NS3_DIR/src/quic/model/$d.h ]; then
+        echo "  Copying $d.h..."
+        cp $d.h $NS3_DIR/src/quic/model/$d.h
+    fi
+    if [ $d.c -nt $NS3_DIR/src/quic/model/$d.c ]; then
+        echo "  Copying $d.c..."
+        cp $d.c $NS3_DIR/src/quic/model/$d.c
+    fi
+    if [ $d.cc -nt $NS3_DIR/src/quic/model/$d.cc ]; then
+        echo "  Copying $d.cc..."
+        cp $d.cc $NS3_DIR/src/quic/model/$d.cc
+    fi
+done
+rm deps
+cd $NS3_DIR/src/quic
+cp -nr model/out/Default/gen/* model
+rm -rf model/out
+
+cp -nr model/build/linux/* model
+rm -rf model/build/linux
+
+echo "Copying done."
+
+# Editing wscript
+> ccs
+find model -iname "*.cc" -not -iname "*-inc*" >> ccs
+find model -iname "*.c" -not -iname "*-inc*" >> ccs
+find model -iname "*.o" >> ccs
+find utils -iname "*.cc" -not -iname "*-inc*" >> ccs
+find helper -iname "*.cc" -not -iname "*-inc*" >> ccs
+cat ccs | sed "s/^/        '/g" | sed "s/$/',/g" > ccs2
+echo -e "s#module\\.source = \\[[\s0-9'a-zA-Z\\/.,-_]+\\]#module.source = [\n$(cat ccs2)" > ccs
+echo -e "    ]" >> ccs
+cat ccs | sed ':a;N;$!ba;s/\n/\\n/g' > ccs2
+echo "#g" >> ccs2
+perl -0777 -i -p ccs2 wscript
+
+rm ccs ccs2
+echo "Edited wscript."

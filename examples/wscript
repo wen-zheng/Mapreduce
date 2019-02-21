@@ -1,0 +1,18 @@
+# -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    for src in ['quic-example-dumbbell', 'quic-example', 'quic-example-wifi', 'quic-example-tcp-comparison', 'quic-mapreduce']:
+      obj = bld.create_ns3_program(src,
+                                   ['netanim', 'quic', 'point-to-point', 'applications', 'internet', 'point-to-point-layout', 'flow-monitor', 'csma', 'wifi'])
+      obj.source = src + '.cc'
+      obj.env.append_value('CXXFLAGS', '-I../src/quic')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/third_party/boringssl/src/include')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/third_party/protobuf/src')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/third_party/brotli/include')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/third_party/googletest/src/googletest/include')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/third_party/googletest/src/googletest/')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/debian_jessie_amd64-sysroot/usr/include/nss')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/debian_jessie_amd64-sysroot/usr/include/nspr')
+      obj.env.append_value('CXXFLAGS', '-I../src/quic/model/sdch/open-vcdiff/src')
+
