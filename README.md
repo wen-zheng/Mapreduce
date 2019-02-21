@@ -4,7 +4,7 @@ This repository is created for the mapreduce course of NJU. Our project is based
 
 # RunOurLab
 
-After successfully completing the installation, you can test the our simulation scripts from the __~/workspace/ns-allinone-3.27/ns-3.27__ directory as follows:
+After successfully completing the installation, you can test our simulation scripts from the __~/workspace/ns-allinone-3.27/ns-3.27__ directory as follows:
 
 1. `mv ./src/quic/ip-cluster ./ip-cluster`
 2. `mv ./src/quic/cluster-min-max-mean ./cluster-min-max-mean`
