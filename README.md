@@ -1,3 +1,19 @@
+# Introduction
+
+This repository is created for the mapreduce course of NJU. Our project is based on [ns-3 quic module](https://gitlab.com/diegoamc/ns-3-quic-module). After [installing this module](#Installation) successfully, you have the ability to [run our lab](#RunOurLab). Our changes to this module can be seen [here](#Changinglist)
+
+# RunOurLab
+
+After successfully completing the installation, you can test the our simulation scripts from the __~/workspace/ns-allinone-3.27/ns-3.27__ directory as follows:
+
+1. `mv ./src/quic/ip-cluster ./ip-cluster`
+2. `mv ./src/quic/cluster-min-max-mean ./cluster-min-max-mean`
+3. `mv ./src/quic/mapreduce.sh ./mapreduce.sh`
+4. `sudo chmod 777 ./mapreduce.sh`
+5. `./waf --run quic-mapreduce` or `././mapreduce.sh`
+
+
+
 # QUIC module for ns-3
 
 This is the `quic` module, which enhances the ns-3 Network Simulator with the
