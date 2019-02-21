@@ -10,7 +10,7 @@ After successfully completing the installation, you can test the our simulation 
 2. `mv ./src/quic/cluster-min-max-mean ./cluster-min-max-mean`
 3. `mv ./src/quic/mapreduce.sh ./mapreduce.sh`
 4. `sudo chmod 777 ./mapreduce.sh`
-5. `./waf --run quic-mapreduce` or `././mapreduce.sh`
+5. `./waf --run quic-mapreduce` or `./mapreduce.sh`
 
 
 
