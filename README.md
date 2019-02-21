@@ -10,20 +10,20 @@ After successfully completing the installation, you can test the our simulation 
 2. `mv ./src/quic/cluster-min-max-mean ./cluster-min-max-mean`
 3. `mv ./src/quic/mapreduce.sh ./mapreduce.sh`
 4. `sudo chmod 777 ./mapreduce.sh`
-5. Test: 
-`./waf --run quic-mapreduce`
-Repeate our lab: 
-`./waf shell`
-`export LD_LIBRARY_PATH=/path/to/workspace/ns-allinone-3.27/ns-3.27/build/:/path/to/workspace/ns-allinone-3.27/ns-3.27/src/quic/model/libs` (absolute path)
-`./mapreduce.sh > statistics`
+5. Test:  
+`./waf --run quic-mapreduce`  
+Repeate our lab:   
+`./waf shell`  
+`export LD_LIBRARY_PATH=/path/to/workspace/ns-allinone-3.27/ns-3.27/build/:/path/to/workspace/ns-allinone-3.27/ns-3.27/src/quic/model/libs` (absolute path)  
+`./mapreduce.sh > statistics`  
 
-If you have successfully run these command, you will see 2 output file in __~/workspace/ns-allinone-3.27/ns-3.27__ directory.(and some trace file.):
+If you have successfully run these command, you will see 2 output file in __~/workspace/ns-allinone-3.27/ns-3.27__ directory.(and some trace file.):  
 * log.txt
   this file contains connection status info collected by quic server.
 * statistics
   this file contains statistical info of each flow.
 
-#Changinglist
+# Changinglist
 
 
 
