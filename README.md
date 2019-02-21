@@ -18,14 +18,44 @@ Repeate our lab:
 `./mapreduce.sh > statistics`  
 
 If you have successfully run these command, you will see 2 output file in __~/workspace/ns-allinone-3.27/ns-3.27__ directory.(and some trace file.):  
-* log.txt
-  this file contains connection status info collected by quic server.
-* statistics
-  this file contains statistical info of each flow.
+* log.txt: this file contains connection status info collected by quic server.
+* statistics: this file contains statistical info of each flow.
 
 # Changinglist
 
+Because there are too many changings, I only list these files path, for more details, please diff our project with [original quic module](https://gitlab.com/diegoamc/ns-3-quic-module).  
 
+
+* examples/wscript
+* examples/quic-mapreduce.cc
+* model/net/quic/core/congestion_control/rtt_stats.cc
+* model/net/quic/core/congestion_control/rtt_stats.h
+* model/net/quic/core/congestion_control/send_algorithm_interface.cc
+* model/net/quic/core/congestion_control/tcp_cubic_sender_bytes.cc
+* model/net/quic/core/congestion_control/tcp_cubic_sender_bytes.h
+* model/net/quic/core/quic_connection.cc
+* model/net/quic/core/quic_connection.h
+* model/net/quic/core/quic_connection_stats.cc
+* model/net/quic/core/quic_flags_list.h
+* model/net/quic/core/quic_sent_packet_manager.cc
+* model/net/quic/core/quic_sent_packet_manager.h
+* model/net/quic/core/quic_session.cc
+* model/net/quic/core/quic_spdy_session.cc
+* model/net/quic/core/quic_stream.cc
+* model/net/quic/core/quic_version_manager.cc
+* model/net/tools/quic/quic_client_base.cc
+* model/net/tools/quic/quic_client_message_loop_network_helper.cc
+* model/net/tools/quic/quic_dispatcher.cc
+* model/net/tools/quic/quic_dispatcher.h
+* model/net/tools/quic/quic_server.cc
+* model/net/tools/quic/quic_simple_dispatcher.cc
+* model/net/tools/quic/quic_simple_dispatcher.h
+* model/net/tools/quic/quic_simple_server.cc
+* model/net/tools/quic/quic_simple_server_stream.cc
+* model/net/tools/quic/quic_spdy_client_base.cc
+* model/net/tools/quic/quic_spdy_client_stream.cc
+* utils/quic-client.cc
+* utils/quic-server.cc
 
 # QUIC module for ns-3
 
