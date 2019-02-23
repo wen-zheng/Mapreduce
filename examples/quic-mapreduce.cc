@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
   Ptr<UniformRandomVariable> uv = CreateObject<UniformRandomVariable>();
 // uv->GetInteger(1, 1)
   nLeft = uv->GetInteger(2, 5);
+  nLeft = 1;
   // Create the point-to-point link helpers
   PointToPointHelper pointToPointRouter;
   pointToPointRouter.SetDeviceAttribute("DataRate", StringValue(dataRate));
@@ -228,7 +229,7 @@ int main(int argc, char *argv[])
 
     double meanSize = 32 * (i + 1) + 10 * uv->GetValue(-1, 1);
     double varSize = meanSize / 3;
-    uint64_t size = nv->GetInteger(meanSize, varSize, meanSize + 3 * varSize) * 1460;
+    uint64_t size = nv->GetInteger(3*meanSize, varSize, meanSize + 3 * varSize) * 1460;
 
     total_size += size;
 

@@ -192,13 +192,13 @@ QuicServerSessionBase* QuicSimpleDispatcher::CreateQuicSession(
         connection->sent_packet_manager_not_const().GetSendAlgorithmNotConst());
       RttStats * rttstats = connection->sent_packet_manager_not_const().GetRttStatsNotConst();
 
-      sendAlgorithm->SetInitialCongestionWindowInBytesPublic(90*kDefaultTCPMSS);
-      // sendAlgorithm->SetInitialCongestionWindowFromBandwidthAndRttPublic(
-      //  QuicBandwidth::FromBitsPerSecond(1000*stats[ESTIMATED_BANDWIDTH_MAX]),
-      //    QuicTime::Delta::FromMicroseconds(stats[MIN_RTT_US_MAX]));
-      // sendAlgorithm->SetCongestionWindowFromBandwidthAndRttPublic(
-      //  QuicBandwidth::FromBitsPerSecond(1000*stats[ESTIMATED_BANDWIDTH_MAX]),
-      //    QuicTime::Delta::FromMicroseconds(stats[MIN_RTT_US_MEAN]));
+      // sendAlgorithm->SetInitialCongestionWindowInBytesPublic(140*kDefaultTCPMSS);
+      sendAlgorithm->SetInitialCongestionWindowFromBandwidthAndRttPublic(
+       QuicBandwidth::FromBitsPerSecond(1000*stats[ESTIMATED_BANDWIDTH_MAX]),
+         QuicTime::Delta::FromMicroseconds(stats[MIN_RTT_US_MAX]));
+      sendAlgorithm->SetCongestionWindowFromBandwidthAndRttPublic(
+       QuicBandwidth::FromBitsPerSecond(1000*stats[ESTIMATED_BANDWIDTH_MAX]),
+         QuicTime::Delta::FromMicroseconds(stats[MIN_RTT_US_MEAN]));
       // sendAlgorithm->SetSlowstartthresholdFromBandwidthAndRttPublic(
       //  QuicBandwidth::FromBitsPerSecond(1000*stats[ESTIMATED_BANDWIDTH_MAX]),
       //    QuicTime::Delta::FromMicroseconds(stats[MIN_RTT_US_MAX]));

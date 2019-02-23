@@ -72,8 +72,8 @@ namespace net {
 
     // If an initial flow control window has not explicitly been set, then use a
     // sensible value for a server: 1 MB for session, 64 KB for each stream.
-    const uint32_t kInitialSessionFlowControlWindow = 1 * 1024 * 1024;  // 1 MB
-    const uint32_t kInitialStreamFlowControlWindow = 64 * 1024;         // 64 KB
+    const uint32_t kInitialSessionFlowControlWindow = 10 * 1024 * 1024;  // 1 MB
+    const uint32_t kInitialStreamFlowControlWindow = 1*1024*1024;         // 64 KB
     if (config_.GetInitialStreamFlowControlWindowToSend() ==
         kMinimumFlowControlSendWindow) {
           // std::cout << "=======" << std::endl;
@@ -112,13 +112,13 @@ namespace net {
 
     
     rc = socket->SetReceiveBufferSize(
-        static_cast<int32_t>(kDefaultSocketReceiveBuffer));
+        static_cast<int32_t>(100*kDefaultSocketReceiveBuffer));
     if (rc < 0) {
       LOG(ERROR) << "SetReceiveBufferSize() failed: " << ErrorToString(rc);
       return rc;
     }
 
-    rc = socket->SetSendBufferSize(20 * kMaxPacketSize);
+    rc = socket->SetSendBufferSize(1000 * kMaxPacketSize);
     if (rc < 0) {
       LOG(ERROR) << "SetSendBufferSize() failed: " << ErrorToString(rc);
       return rc;
